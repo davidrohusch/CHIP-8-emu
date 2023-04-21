@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <fmt/core.h>
 #include <iostream>
+#include "CEmulator.h"
 
 namespace po = boost::program_options;
 
@@ -19,7 +20,6 @@ int main(int argc, char *argv[]) {
     desc.print(std::cerr);
     return 1;
   }
-
   if (!vm.count("rom")) {
     fmt::print("Missing rom file\n");
     return 1;
@@ -28,6 +28,8 @@ int main(int argc, char *argv[]) {
     fmt::print("{} File does not exist\n", vm["rom"].as<std::string>());
     return 1;
   }
+  CEmulator emulator(vm["rom"].as<std::string>());
+  emulator.run();
 
   return 0;
 }

@@ -1,9 +1,9 @@
+#include "CEmulator.h"
 #include <boost/program_options.hpp>
 #include <cstdio>
 #include <filesystem>
 #include <fmt/core.h>
 #include <iostream>
-#include "CEmulator.h"
 
 namespace po = boost::program_options;
 

@@ -2,10 +2,17 @@
 #include <fmt/core.h>
 #include <fstream>
 #include <memory>
-#include <fmt/core.h>
+#include <SFML/Window.hpp>
 
 CEmulator::CEmulator(std::string_view file_path) { load_file(file_path); };
-void CEmulator::run(){};
+
+void CEmulator::run() {
+  return;
+  sf::Window window(sf::VideoMode(128, 64), "chip-8 emu");
+  while (true) {
+    
+  };
+};
 
 void CEmulator::load_file(std::string_view file_path) {
 

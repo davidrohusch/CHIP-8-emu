@@ -10,6 +10,8 @@ target_include_directories(CHIP8_emu PRIVATE src)
 
 find_package(fmt REQUIRED)
 find_package(Boost REQUIRED COMPONENTS program_options)
+find_package(SFML REQUIRED COMPONENTS graphics window system)
 
 target_link_libraries(CHIP8_emu PRIVATE fmt::fmt)
 target_link_libraries(CHIP8_emu PRIVATE Boost::program_options)
+target_link_libraries(CHIP8_emu PRIVATE sfml-graphics sfml-window sfml-system)

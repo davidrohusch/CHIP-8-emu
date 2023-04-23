@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.00)
 set(CMAKE_CXX_STANDARD 20)
 project(CHIP8_emu)
 
-set(SOURCES src/main.cpp src/CEmulator.cpp include/CEmulator.h)
+set(SOURCES src/main.cpp src/CEmulator.cpp include/CEmulator.h src/CGraphics.cpp include/CEmulator.h include/chip8_consts.h)
 add_executable(CHIP8_emu ${SOURCES})
 
 target_include_directories(CHIP8_emu PRIVATE include)

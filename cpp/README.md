@@ -4,6 +4,7 @@
 ## Build
 
 ```sh
+[user@user cpp] cmake configure .
 [user@user cpp] cmake --build .
 ```
 
@@ -11,3 +12,4 @@
 - cmake >= 3.00
 - fmt
 - c++=20
+- SFML 2.5.1

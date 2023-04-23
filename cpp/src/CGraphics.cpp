@@ -1,11 +1,12 @@
 #include "CGraphics.h"
+#include "chip8_consts.h"
 #include <CGraphics.h>
 #include <SFML/Window/Window.hpp>
 
 CGraphics::CGraphics()
     : window(sf::VideoMode(width, height), "CHIP-8 cpp emu"){};
 
-void CGraphics::Render(const bool **display, int x_offset, int y_offset,
+void CGraphics::Render(const bool display[chip8::display_height][chip8::display_width], int x_offset, int y_offset,
                        int pixel_width, int pixel_height) const {
     /*
       Render the current frame with the given display.
@@ -17,8 +18,19 @@ void CGraphics::Render(const bool **display, int x_offset, int y_offset,
       pixel_width is the width of the pixel displayed.
       pixel_height is the height of the pixel displayed.
 
-      the display is assumed to be of size width*height of the class variables.
-      If the pixel would exceed the display size it will be clipped.
     */
 
 };
+
+
+sf::Event CGraphics::GetEvent(){
+  return event;
+}
+
+bool CGraphics::PrepareEvent(){
+  return window.pollEvent(event);
+}
+
+void CGraphics::Close(){
+  window.close();
+}

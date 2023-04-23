@@ -17,7 +17,7 @@ void CEmulator::HandleEvents() {
   }
 };
 void CEmulator::run() {
-  while (true) {
+  while (m_graphic_wrapper.IsRunning()) {
     m_graphic_wrapper.Render(display);
     HandleEvents();
   };

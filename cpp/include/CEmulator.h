@@ -15,7 +15,9 @@ private:
   void load_file(std::string_view file_path);
   void HandleEvents();
   chip8::inputs input;
-  void print_text(int x, int y, std::string_view text);
+  void print_character(const int x, const int y, const char character);
+  void print_sprite(const int x, const int y,
+                    const std::vector<unsigned char> &sprite);
 
   std::unordered_map<char, std::array<unsigned char, 5>> fontset = {
       {'0', {0xF0, 0x90, 0x90, 0x90, 0xF0}},

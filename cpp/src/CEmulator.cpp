@@ -1,22 +1,59 @@
 #include "CEmulator.h"
+#include "chip8_consts.h"
+#include <bitset>
 #include <fmt/core.h>
 #include <fstream>
 #include <memory>
-
-
 
 CEmulator::CEmulator(std::string_view file_path)
     : memory(std::make_shared<char *>(new char[4096])) {
   load_file(file_path);
 };
 
-void CEmulator::print_text(int x, int y, std::string_view text) {
-  for (auto &character : text) {
-    if (character < '0' || character > 'f') {
-      fmt::print("{} is not supported by the chip8 font.", character);
+void CEmulator::print_sprite(const int x, const int y,
+                             const std::vector<unsigned char> &sprite) {
+
+  int x_offset = 0;
+  int y_offset = 0;
+  for (auto &i : sprite) {
+    auto binary = std::bitset<8>(i);
+    if (y + y_offset < 0) {
+      y_offset += 1;
+      x_offset = 0;
+      continue;
     }
+    while (binary.any()) {
+      if (x + x_offset < 0) {
+        x_offset += 1;
+        binary <<= 1;
+        continue;
+      }
+      if ((x + x_offset) >= chip8::display_width) {
+        break;
+      }
+      if (binary[binary.size() - 1] == true) {
+        display[y + y_offset][x + x_offset] = true;
+      }
+      x_offset += 1;
+      binary <<= 1;
+    }
+    y_offset += 1;
+    x_offset = 0;
+    if ((y + y_offset) >= chip8::display_height)
+      break;
   }
-}
+};
+
+void CEmulator::print_character(const int x, const int y,
+                                const char character) {
+  if (character < '0' || character > 'f') {
+    fmt::print("{} is not supported by the chip8 font.", character);
+    return;
+  }
+  print_sprite(x, y,
+               std::vector<unsigned char>(fontset[character].begin(),
+                                          fontset[character].end()));
+};
 
 void CEmulator::HandleEvents() {
   if (!m_graphic_wrapper.PrepareEvent())
@@ -34,7 +71,7 @@ void CEmulator::HandleEvents() {
     }
     if (event.key.code == sf::Keyboard::F1) {
       // debug
-      print_text(0, 0, "0");
+      print_character(23, 11, 'F');
       break;
     }
   };

@@ -1,6 +1,7 @@
 #include "CGraphics.h"
 #include "chip8_consts.h"
 #include <CGraphics.h>
+#include <fmt/core.h>
 
 CGraphics::CGraphics()
     : window(sf::VideoMode(width, height), "CHIP-8 cpp emu"){};
@@ -9,7 +10,7 @@ void CGraphics::DrawPixel(int x, int y, int width, int height,
                           sf::Color color) {
   sf::RectangleShape rectangle;
   rectangle.setSize(sf::Vector2f(width, height));
-  rectangle.setOutlineColor(color);
+  rectangle.setFillColor(color);
   rectangle.setPosition(x, y);
   window.draw(rectangle);
 }
@@ -33,10 +34,10 @@ void CGraphics::Render(
     for (int x = 0; x < chip8::display_width; x++) {
       if (display[y][x]) {
         DrawPixel(x * pixel_width, y * pixel_height, pixel_width, pixel_height,
-                  sf::Color::White);
+                  sf::Color::Black);
       } else {
         DrawPixel(x * pixel_width, y * pixel_height, pixel_width, pixel_height,
-                  sf::Color::Black);
+                  sf::Color::White);
       }
     }
   }

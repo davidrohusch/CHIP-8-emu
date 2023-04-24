@@ -12,6 +12,7 @@ private:
 
   void load_file(std::string_view file_path);
   void HandleEvents();
+  chip8::inputs input;
 
 public:
   CEmulator(std::string_view file_path);

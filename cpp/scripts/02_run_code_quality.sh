@@ -1,0 +1,1 @@
+#TODO nějaký clang tidy, který by zabil pipelinu pokud by nebyla dobrá.

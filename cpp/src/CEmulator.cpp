@@ -3,7 +3,10 @@
 #include <fstream>
 #include <memory>
 
-CEmulator::CEmulator(std::string_view file_path) { load_file(file_path); };
+CEmulator::CEmulator(std::string_view file_path)
+    : memory(std::make_shared<char *>(new char[4096])) {
+  load_file(file_path);
+};
 void CEmulator::HandleEvents() {
   if (!m_graphic_wrapper.PrepareEvent())
     return;

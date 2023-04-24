@@ -3,10 +3,21 @@
 #include <fstream>
 #include <memory>
 
+
+
 CEmulator::CEmulator(std::string_view file_path)
     : memory(std::make_shared<char *>(new char[4096])) {
   load_file(file_path);
 };
+
+void CEmulator::print_text(int x, int y, std::string_view text) {
+  for (auto &character : text) {
+    if (character < '0' || character > 'f') {
+      fmt::print("{} is not supported by the chip8 font.", character);
+    }
+  }
+}
+
 void CEmulator::HandleEvents() {
   if (!m_graphic_wrapper.PrepareEvent())
     return;
@@ -18,12 +29,16 @@ void CEmulator::HandleEvents() {
     m_graphic_wrapper.Close();
     break;
   case sf::Event::KeyPressed:
-    if (event.key.code == sf::Keyboard::Escape){
+    if (event.key.code == sf::Keyboard::Escape) {
       m_graphic_wrapper.Close();
+    }
+    if (event.key.code == sf::Keyboard::F1) {
+      // debug
+      print_text(0, 0, "0");
       break;
     }
-  }
-};
+  };
+}
 void CEmulator::run() {
   while (m_graphic_wrapper.IsRunning()) {
     m_graphic_wrapper.Render(display);

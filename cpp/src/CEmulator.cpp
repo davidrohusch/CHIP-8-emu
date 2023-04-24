@@ -17,6 +17,11 @@ void CEmulator::HandleEvents() {
   case sf::Event::Closed:
     m_graphic_wrapper.Close();
     break;
+  case sf::Event::KeyPressed:
+    if (event.key.code == sf::Keyboard::Escape){
+      m_graphic_wrapper.Close();
+      break;
+    }
   }
 };
 void CEmulator::run() {

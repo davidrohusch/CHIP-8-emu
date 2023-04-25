@@ -7,20 +7,11 @@
 #include <string_view>
 class CEmulator {
 private:
+  std::array<unsigned char, chip8::memory_size> memory;
   std::shared_ptr<char *> m_loaded_file;
   CGraphics m_graphic_wrapper;
   bool display[chip8::display_height][chip8::display_width]{};
-  std::array<unsigned char, chip8::memory_size> memory;
-
-  void load_file(std::string_view file_path);
-  void HandleEvents();
   chip8::inputs input;
-
-  [[maybe_unused]] void print_character(const int x, const int y,
-                                        const char character);
-  void print_sprite(const int x, const int y,
-                    const std::vector<unsigned char> &sprite);
-
   std::map<char, std::array<unsigned char, 5>> fontset = {
       {'0', {0xF0, 0x90, 0x90, 0x90, 0xF0}},
       {'1', {0x20, 0x60, 0x20, 0x20, 0x70}},
@@ -38,6 +29,13 @@ private:
       {'D', {0xE0, 0x90, 0x90, 0x90, 0xE0}},
       {'E', {0xF0, 0x80, 0xF0, 0x80, 0xF0}},
       {'F', {0xF0, 0x80, 0xF0, 0x80, 0x80}}};
+  
+  void load_file(std::string_view file_path);
+  void HandleEvents();
+  [[maybe_unused]] void print_character(const int x, const int y,
+                                        const char character);
+  void print_sprite(const int x, const int y,
+                    const std::vector<unsigned char> &sprite);
 
 public:
   CEmulator(std::string_view file_path);

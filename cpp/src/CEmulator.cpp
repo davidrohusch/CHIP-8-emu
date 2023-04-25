@@ -10,12 +10,15 @@ CEmulator::CEmulator(std::string_view file_path) {
   load_file(file_path);
   /// erase memory
   std::ranges::fill(memory, 0);
-  /// Loads the font data to memory
+  /* Loads the font data to memory
+  First 512 bytes are reserved. The first 128 bytes are reserved for the font
+  data.
+  */
   auto it = memory.begin();
   int offset = 0;
   for (auto &symbol : fontset) {
-    std::ranges::copy(symbol.second, memory.begin() + offset*5);
-    offset ++;
+    std::ranges::copy(symbol.second, memory.begin() + offset * 5);
+    offset++;
   }
 };
 

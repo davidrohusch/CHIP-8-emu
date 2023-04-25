@@ -4,6 +4,7 @@ namespace chip8 {
 constexpr int display_width = 64;
 constexpr int display_height = 32;
 constexpr int multiplier = 16;
+constexpr int memory_size = 4096;
 struct inputs {
   bool a = false;
   bool b = false;

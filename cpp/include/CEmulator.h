@@ -2,24 +2,26 @@
 #include "CGraphics.h"
 #include "chip8_consts.h"
 #include <array>
+#include <map>
 #include <memory>
 #include <string_view>
-#include <unordered_map>
 class CEmulator {
 private:
   std::shared_ptr<char *> m_loaded_file;
   CGraphics m_graphic_wrapper;
   bool display[chip8::display_height][chip8::display_width]{};
-  std::shared_ptr<char *> memory;
+  std::array<unsigned char, chip8::memory_size> memory;
 
   void load_file(std::string_view file_path);
   void HandleEvents();
   chip8::inputs input;
-  void print_character(const int x, const int y, const char character);
+
+  [[maybe_unused]] void print_character(const int x, const int y,
+                                        const char character);
   void print_sprite(const int x, const int y,
                     const std::vector<unsigned char> &sprite);
 
-  std::unordered_map<char, std::array<unsigned char, 5>> fontset = {
+  std::map<char, std::array<unsigned char, 5>> fontset = {
       {'0', {0xF0, 0x90, 0x90, 0x90, 0xF0}},
       {'1', {0x20, 0x60, 0x20, 0x20, 0x70}},
       {'2', {0xF0, 0x10, 0xF0, 0x80, 0xF0}},

@@ -1,13 +1,22 @@
 #include "CEmulator.h"
 #include "chip8_consts.h"
+#include <algorithm>
 #include <bitset>
 #include <fmt/core.h>
 #include <fstream>
 #include <memory>
 
-CEmulator::CEmulator(std::string_view file_path)
-    : memory(std::make_shared<char *>(new char[4096])) {
+CEmulator::CEmulator(std::string_view file_path) {
   load_file(file_path);
+  /// erase memory
+  std::ranges::fill(memory, 0);
+  /// Loads the font data to memory
+  auto it = memory.begin();
+  int offset = 0;
+  for (auto &symbol : fontset) {
+    std::ranges::copy(symbol.second, memory.begin() + offset*5);
+    offset ++;
+  }
 };
 
 void CEmulator::print_sprite(const int x, const int y,
@@ -46,6 +55,7 @@ void CEmulator::print_sprite(const int x, const int y,
 
 void CEmulator::print_character(const int x, const int y,
                                 const char character) {
+  /*probably unsued*/
   if (character < '0' || character > 'f') {
     fmt::print("{} is not supported by the chip8 font.", character);
     return;
@@ -71,7 +81,10 @@ void CEmulator::HandleEvents() {
     }
     if (event.key.code == sf::Keyboard::F1) {
       // debug
-      print_character(23, 11, 'F');
+      print_character(23, 11, 'A');
+      print_character(23 + 7, 11, '5');
+      print_character(23 + 14, 11, '0');
+      print_character(23 + 21, 11, '4');
       break;
     }
   };

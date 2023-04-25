@@ -15,3 +15,5 @@ find_package(SFML REQUIRED COMPONENTS graphics window system)
 target_link_libraries(CHIP8_emu PRIVATE fmt::fmt)
 target_link_libraries(CHIP8_emu PRIVATE Boost::program_options)
 target_link_libraries(CHIP8_emu PRIVATE sfml-graphics sfml-window sfml-system)
+
+add_compile_options(-Werror -Wall -Wextra -pedantic)
